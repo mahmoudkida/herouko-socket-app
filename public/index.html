@@ -1,20 +1,104 @@
 <html>
 
-<body>
-    <div class="sm-col-6">
-    <textarea class="what"></textarea>
-    <button class="record">
-                            Record Voice
-                        </button>
-    <button class="ask-bot">
-                            Ask UXAWY
-                        </button>
-</div>
-<div class="sm-col-6">
-    <p class="bot-response">
+<head>
+    <style>
+        body{
+            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+        }
 
-    </p>
+        .container .col-6 {
+            padding: 10px 15px;
+        }
+
+        @media (min-device-width: 768px) {
+            .container {
+                flex-direction: row;
+            }
+            
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .record {
+            display: block;
+            background: #2196F3;
+            border: none;
+            padding: 30px;
+            border-radius: 50%;
+            margin: 15px auto;
+        }
+
+        .record:active {
+            background: #2196F3;
+        }
+
+        .record img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .send-container{
+            display: flex;
+            flex-direction: row;
+        }
+        
+
+        .send-container textarea{
+            flex-grow: 1;
+            resize: vertical;
+        }
+        .ask-bot {
+            background: #673AB7;
+            border: none;
+            padding: 10px 20px;
+            border-bottom-right-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        .ask-bot img {
+            height: 20px;
+            width: 20px;
+        }
+        .instructure{
+            text-align: center;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="col-6">
+            <label for="message" class="form-label">
+            Write what's on your mind or record your vouce using the record button below
+        </label>
+            <div class="send-container">
+            <textarea class="what" id="message"></textarea>
+            <button class="ask-bot" title="send text">
+                            <img src="images/paper-plane.svg" alt="record icon">
+                        </button>
+                </div>
+            <div>
+            <button class="record" title="record your voice">
+                            <img src="images/microphone.svg" alt="record icon">
+                        </button>
+                <p class="instructure">Tap to record!</p>
 </div>
+
+        </div>
+        <div class="col-6">
+            <label>UXAWY Response:</label>
+            <p class="bot-response">
+
+            </p>
+
+        </div>
+    </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
         var socket = io();
