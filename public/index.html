@@ -34,6 +34,10 @@
             padding: 30px;
             border-radius: 50%;
             margin: 15px auto;
+            -webkit-user-select: none;
+            /* disable selection/Copy of UIWebView */
+            -webkit-touch-callout: none;
+            /* disable the IOS popup when long-press on a link */
         }
 
         .record:active {
@@ -72,7 +76,8 @@
         .instructure {
             text-align: center;
         }
-        .record-load{
+
+        .record-load {
             visibility: hidden;
         }
 
@@ -110,6 +115,25 @@
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
+        //preevnt popup on long press
+        function absorbEvent_(event) {
+            var e = event || window.event;
+            e.preventDefault && e.preventDefault();
+            e.stopPropagation && e.stopPropagation();
+            e.cancelBubble = true;
+            e.returnValue = false;
+            return false;
+        }
+
+        function preventLongPressMenu(node) {
+            node.ontouchstart = absorbEvent_;
+            node.ontouchmove = absorbEvent_;
+            node.ontouchend = absorbEvent_;
+            node.ontouchcancel = absorbEvent_;
+        }
+        preventLongPressMenu(document.querySelector('.record'));
+        
+        
         var socket = io();
 
         var sayResponse = true;
@@ -119,11 +143,11 @@
         recognition.lang = 'en-US';
         recognition.interimResults = false;
         document.querySelector('.record').addEventListener('mousedown', () => {
-            document.querySelector(".record-load").style.visibility="visible";
+            document.querySelector(".record-load").style.visibility = "visible";
             recognition.start();
         });
         document.querySelector('.record').addEventListener('mouseup', () => {
-            document.querySelector(".record-load").style.visibility="hidden";
+            document.querySelector(".record-load").style.visibility = "hidden";
             recognition.stop();
         });
         document.querySelector('.what').addEventListener('keyup', () => {
